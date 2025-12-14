@@ -1,0 +1,148 @@
+/* Variables del Proyecto: Un look & feel coherente y llamativo */
+:root {
+    --primary-color: #00ffcc; /* Cian Neón: Éxito, Foco, Valor */
+    --secondary-color: #00ccff; /* Azul Neón: Tecnología, Base */
+    --bg-dark: #0d0d1a; /* El negro de fondo perfecto */
+    --bg-light: #181830; 
+    --text-color: #c0ffff; 
+    --accent-color: #ff33cc; /* Magenta Neón: Advertencia, Fricción, Impacto */
+    --color-friction: #ff33cc;
+    --shadow-neon: 0 0 5px var(--primary-color), 0 0 12px var(--primary-color);
+    
+    /* Espaciado ajustado para evitar que se vea "pegado" */
+    --spacing-large: 6.5rem; 
+    --spacing-medium: 3.5rem; 
+    --spacing-small: 2rem; 
+    --spacing-x-small: 1rem;
+}
+
+/* Base y Tipografía */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body.theme-dark {
+    font-family: 'Share Tech Mono', monospace; 
+    line-height: 1.6; 
+    color: var(--text-color);
+    background-color: var(--bg-dark); 
+    scroll-behavior: smooth; 
+    overflow-x: hidden;
+}
+
+/* Contenedores: Máximo espacio y centrado */
+.container { width: 90%; max-width: 1300px; margin: 0 auto; }
+.wide-container { max-width: 1500px; }
+
+/* Secciones: Generoso espacio vertical */
+.hero-section, .hud-section, .protocol-section, .solution-section { 
+    padding: var(--spacing-large) 0; 
+}
+
+/* Títulos y Texto de Venta */
+.large-title { font-size: 3.2rem; line-height: 1.1; margin-bottom: 1.5rem; }
+.subtitle-impact { font-size: 1.15rem; margin-bottom: 2.8rem; color: var(--text-color); }
+.section-description { margin-bottom: var(--spacing-medium); }
+
+/* --- GRID DE VENTA Y VENTAJAS --- */
+.solution-grid { 
+    display: grid; 
+    gap: var(--spacing-medium); 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    margin-top: var(--spacing-medium);
+}
+.solution-card, .protocol-card { 
+    border-left: 3px solid var(--secondary-color); 
+    padding: var(--spacing-small); 
+    transition: all 0.3s ease;
+}
+/* Efecto de 'Respiración' al hacer hover */
+.card-hover-shadow:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0, 255, 204, 0.35); /* Shadow más potente */
+}
+.icon-neon { font-size: 3rem; margin-bottom: var(--spacing-x-small); }
+
+/* --- HUD PRINCIPAL (Métricas) --- */
+.hud-dashboard { 
+    gap: var(--spacing-medium); 
+    grid-template-columns: repeat(2, 1fr); 
+    padding: var(--spacing-medium);
+}
+.metric-value { 
+    font-size: 4rem; 
+    transition: all 0.2s; /* Para los movimientos rápidos de JS */
+}
+.module-info { color: var(--text-secondary); margin-top: 1rem; }
+
+/* Log de Actividad (El STICK trabajando en tiempo real) */
+.hud-module-list { grid-column: 1 / -1; }
+#execution-list li { 
+    padding: 0.8rem 0; 
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    transition: opacity 0.5s ease;
+}
+
+/* Barra de Carga (Simulando esfuerzo de la IA) */
+.loading-bar {
+    height: 12px;
+    background-color: var(--bg-dark);
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 3px var(--primary-color);
+}
+.loading-bar::after {
+    background: linear-gradient(90deg, transparent 0%, var(--primary-color) 50%, var(--secondary-color) 100%);
+}
+
+/* ANIMACIONES CLAVE */
+/* Flicker (TFM) */
+.flicker-text { animation: text-flicker var(--flicker-speed, 0.1s) infinite alternate; }
+@keyframes text-flicker {
+    0% { opacity: 1; text-shadow: var(--shadow-neon); }
+    50% { opacity: 0.8; text-shadow: none; }
+    100% { opacity: 1; text-shadow: var(--shadow-neon); }
+}
+
+/* Shimmer (R.E. Monetario) */
+.shimmer-text {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 30%, var(--primary-color) 60%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 100%; /* Aumentamos el tamaño para un shimmer más lento */
+    animation: text-shimmer 6s infinite linear;
+}
+@keyframes text-shimmer {
+    0% { background-position: 300% 0; }
+    100% { background-position: -300% 0; }
+}
+
+/* Media Queries (Responsividad) */
+@media (max-width: 1200px) {
+    .hero-container { flex-direction: column; text-align: center; }
+    .hero-text { max-width: 100%; border-left: none; padding-left: 0; }
+    .large-title { font-size: 2.8rem; }
+    .hud-dashboard { grid-template-columns: 1fr; border-left: none; }
+    .solution-grid { grid-template-columns: 1fr; }
+}
+/* --- Añadir al final de tu archivo styles.css --- */
+
+/* ESTILOS DE SCROLL REVEAL (ACTIVACIÓN AL BAJAR) */
+
+/* Estado Inicial: Los módulos están listos para entrar */
+.data-module {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98); /* Ligeramente más pequeños y abajo */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Estado Activo: Cuando el JS detecta que está en la vista */
+.data-module.is-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Ajustes para el HERO SECTION (El título que se desvanece) */
+.hero-section {
+    position: sticky; /* Opcional: mantener la sección arriba mientras se desvanece */
+    top: 0;
+    z-index: 10;
+    transition: opacity 0.1s; /* JS controlará esto, pero ponemos un fallback */
+}
